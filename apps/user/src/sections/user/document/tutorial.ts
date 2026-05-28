@@ -1,6 +1,8 @@
 import yaml from "js-yaml";
 
-const BASE_URL = import.meta.env.VITE_TUTORIAL_BASE_URL || "tutorial";
+const BASE_URL =
+  import.meta.env.VITE_TUTORIAL_BASE_URL ||
+  "https://user.iataglobal.cloud/tutorials";
 
 // async function getVersion() {
 //   // API rate limit: 60 requests per hour
