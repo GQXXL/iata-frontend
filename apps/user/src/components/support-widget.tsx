@@ -71,7 +71,12 @@ const playUnreadBeep = (ctxRef: MutableRefObject<AudioContext | null>) => {
     };
 
     if (ctx.state !== "running") {
-      void ctx.resume().then(run);
+      ctx
+        .resume()
+        .then(run)
+        .catch(() => {
+          // ignore
+        });
       return;
     }
 
@@ -114,7 +119,9 @@ export function SupportWidget() {
 
   useEffect(() => {
     const unlock = () => {
-      void ensureAudioReady();
+      ensureAudioReady().catch(() => {
+        // ignore
+      });
     };
     window.addEventListener("pointerdown", unlock, { passive: true });
     window.addEventListener("keydown", unlock, { passive: true });
