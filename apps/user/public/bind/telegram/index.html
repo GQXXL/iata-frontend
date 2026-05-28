@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bind Redirect</title>
+    <meta http-equiv="refresh" content="0; url=/#/profile">
+    <script>
+    "use strict";
+
+    // Telegram may return callback payload in location.hash (e.g. #tgAuthResult=...).
+    // Bridge /bind/telegram[/]?... or /bind/telegram/#tgAuthResult=... -> /#/bind/telegram?...
+    (() => {
+      try {
+        let path = window.location.pathname || "/";
+        path = path.replace(/\/$/, "");
+
+        const search = window.location.search || "";
+        const hash = window.location.hash || "";
+        const normalizedHashQuery =
+          hash.startsWith("#") && hash.length > 1 ? `?${hash.slice(1)}` : "";
+
+        const query = search || normalizedHashQuery;
+        const target = `/#${path}${query}`;
+        window.location.replace(target);
+      } catch (_e) {
+        window.location.replace("/#/profile");
+      }
+    })();
+    </script>
+  </head>
+  <body>Redirecting…</body>
+</html>

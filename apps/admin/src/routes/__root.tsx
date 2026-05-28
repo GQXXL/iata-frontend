@@ -9,6 +9,7 @@ import { getGlobalConfig } from "@workspace/ui/services/common/common";
 import { isBrowser } from "@workspace/ui/utils/index";
 import { useEffect } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { SupportAdminWidget } from "@/components/support-admin-widget";
 import { useGlobalStore } from "@/stores/global";
 
 export const Route = createRootRouteWithContext()({
@@ -56,7 +57,12 @@ export const Route = createRootRouteWithContext()({
         </Helmet>
         <NavigationProgress />
         <Outlet />
+        <SupportAdminWidget />
         <Toaster closeButton richColors />
+        <div
+          dangerouslySetInnerHTML={{ __html: common?.site.custom_html || "" }}
+          id="custom_html"
+        />
         <TanStackDevtools
           config={{
             position: "bottom-right",

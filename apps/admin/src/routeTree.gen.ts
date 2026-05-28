@@ -16,8 +16,17 @@ const DashboardRouteLazyRouteImport = createFileRoute('/dashboard')()
 const IndexLazyRouteImport = createFileRoute('/')()
 const DashboardIndexLazyRouteImport = createFileRoute('/dashboard/')()
 const DashboardServersLazyRouteImport = createFileRoute('/dashboard/servers')()
+const DashboardProbeAgentResultsLazyRouteImport = createFileRoute(
+  '/dashboard/probe-agent-results',
+)()
 const DashboardNodesLazyRouteImport = createFileRoute('/dashboard/nodes')()
+const DashboardNodeLatencyMonitorLazyRouteImport = createFileRoute(
+  '/dashboard/node-latency-monitor',
+)()
 const DashboardUserIndexLazyRouteImport = createFileRoute('/dashboard/user/')()
+const DashboardTutorialIndexLazyRouteImport = createFileRoute(
+  '/dashboard/tutorial/',
+)()
 const DashboardTicketIndexLazyRouteImport =
   createFileRoute('/dashboard/ticket/')()
 const DashboardSystemIndexLazyRouteImport =
@@ -66,6 +75,9 @@ const DashboardLogResetSubscribeLazyRouteImport = createFileRoute(
 const DashboardLogRegisterLazyRouteImport = createFileRoute(
   '/dashboard/log/register',
 )()
+const DashboardLogNetworkActivityLazyRouteImport = createFileRoute(
+  '/dashboard/log/network-activity',
+)()
 const DashboardLogMobileLazyRouteImport = createFileRoute(
   '/dashboard/log/mobile',
 )()
@@ -109,6 +121,14 @@ const DashboardServersLazyRoute = DashboardServersLazyRouteImport.update({
 } as any).lazy(() =>
   import('./routes/dashboard/servers.lazy').then((d) => d.Route),
 )
+const DashboardProbeAgentResultsLazyRoute =
+  DashboardProbeAgentResultsLazyRouteImport.update({
+    id: '/probe-agent-results',
+    path: '/probe-agent-results',
+    getParentRoute: () => DashboardRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/dashboard/probe-agent-results.lazy').then((d) => d.Route),
+  )
 const DashboardNodesLazyRoute = DashboardNodesLazyRouteImport.update({
   id: '/nodes',
   path: '/nodes',
@@ -116,6 +136,14 @@ const DashboardNodesLazyRoute = DashboardNodesLazyRouteImport.update({
 } as any).lazy(() =>
   import('./routes/dashboard/nodes.lazy').then((d) => d.Route),
 )
+const DashboardNodeLatencyMonitorLazyRoute =
+  DashboardNodeLatencyMonitorLazyRouteImport.update({
+    id: '/node-latency-monitor',
+    path: '/node-latency-monitor',
+    getParentRoute: () => DashboardRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/dashboard/node-latency-monitor.lazy').then((d) => d.Route),
+  )
 const DashboardUserIndexLazyRoute = DashboardUserIndexLazyRouteImport.update({
   id: '/user/',
   path: '/user/',
@@ -123,6 +151,14 @@ const DashboardUserIndexLazyRoute = DashboardUserIndexLazyRouteImport.update({
 } as any).lazy(() =>
   import('./routes/dashboard/user/index.lazy').then((d) => d.Route),
 )
+const DashboardTutorialIndexLazyRoute =
+  DashboardTutorialIndexLazyRouteImport.update({
+    id: '/tutorial/',
+    path: '/tutorial/',
+    getParentRoute: () => DashboardRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/dashboard/tutorial/index.lazy').then((d) => d.Route),
+  )
 const DashboardTicketIndexLazyRoute =
   DashboardTicketIndexLazyRouteImport.update({
     id: '/ticket/',
@@ -267,6 +303,14 @@ const DashboardLogRegisterLazyRoute =
   } as any).lazy(() =>
     import('./routes/dashboard/log/register.lazy').then((d) => d.Route),
   )
+const DashboardLogNetworkActivityLazyRoute =
+  DashboardLogNetworkActivityLazyRouteImport.update({
+    id: '/log/network-activity',
+    path: '/log/network-activity',
+    getParentRoute: () => DashboardRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/dashboard/log/network-activity.lazy').then((d) => d.Route),
+  )
 const DashboardLogMobileLazyRoute = DashboardLogMobileLazyRouteImport.update({
   id: '/log/mobile',
   path: '/log/mobile',
@@ -314,7 +358,9 @@ const DashboardLogBalanceLazyRoute = DashboardLogBalanceLazyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/dashboard': typeof DashboardRouteLazyRouteWithChildren
+  '/dashboard/node-latency-monitor': typeof DashboardNodeLatencyMonitorLazyRoute
   '/dashboard/nodes': typeof DashboardNodesLazyRoute
+  '/dashboard/probe-agent-results': typeof DashboardProbeAgentResultsLazyRoute
   '/dashboard/servers': typeof DashboardServersLazyRoute
   '/dashboard/': typeof DashboardIndexLazyRoute
   '/dashboard/log/balance': typeof DashboardLogBalanceLazyRoute
@@ -323,6 +369,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/log/gift': typeof DashboardLogGiftLazyRoute
   '/dashboard/log/login': typeof DashboardLogLoginLazyRoute
   '/dashboard/log/mobile': typeof DashboardLogMobileLazyRoute
+  '/dashboard/log/network-activity': typeof DashboardLogNetworkActivityLazyRoute
   '/dashboard/log/register': typeof DashboardLogRegisterLazyRoute
   '/dashboard/log/reset-subscribe': typeof DashboardLogResetSubscribeLazyRoute
   '/dashboard/log/server-traffic': typeof DashboardLogServerTrafficLazyRoute
@@ -341,11 +388,14 @@ export interface FileRoutesByFullPath {
   '/dashboard/subscribe': typeof DashboardSubscribeIndexLazyRoute
   '/dashboard/system': typeof DashboardSystemIndexLazyRoute
   '/dashboard/ticket': typeof DashboardTicketIndexLazyRoute
+  '/dashboard/tutorial': typeof DashboardTutorialIndexLazyRoute
   '/dashboard/user': typeof DashboardUserIndexLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/dashboard/node-latency-monitor': typeof DashboardNodeLatencyMonitorLazyRoute
   '/dashboard/nodes': typeof DashboardNodesLazyRoute
+  '/dashboard/probe-agent-results': typeof DashboardProbeAgentResultsLazyRoute
   '/dashboard/servers': typeof DashboardServersLazyRoute
   '/dashboard': typeof DashboardIndexLazyRoute
   '/dashboard/log/balance': typeof DashboardLogBalanceLazyRoute
@@ -354,6 +404,7 @@ export interface FileRoutesByTo {
   '/dashboard/log/gift': typeof DashboardLogGiftLazyRoute
   '/dashboard/log/login': typeof DashboardLogLoginLazyRoute
   '/dashboard/log/mobile': typeof DashboardLogMobileLazyRoute
+  '/dashboard/log/network-activity': typeof DashboardLogNetworkActivityLazyRoute
   '/dashboard/log/register': typeof DashboardLogRegisterLazyRoute
   '/dashboard/log/reset-subscribe': typeof DashboardLogResetSubscribeLazyRoute
   '/dashboard/log/server-traffic': typeof DashboardLogServerTrafficLazyRoute
@@ -372,13 +423,16 @@ export interface FileRoutesByTo {
   '/dashboard/subscribe': typeof DashboardSubscribeIndexLazyRoute
   '/dashboard/system': typeof DashboardSystemIndexLazyRoute
   '/dashboard/ticket': typeof DashboardTicketIndexLazyRoute
+  '/dashboard/tutorial': typeof DashboardTutorialIndexLazyRoute
   '/dashboard/user': typeof DashboardUserIndexLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexLazyRoute
   '/dashboard': typeof DashboardRouteLazyRouteWithChildren
+  '/dashboard/node-latency-monitor': typeof DashboardNodeLatencyMonitorLazyRoute
   '/dashboard/nodes': typeof DashboardNodesLazyRoute
+  '/dashboard/probe-agent-results': typeof DashboardProbeAgentResultsLazyRoute
   '/dashboard/servers': typeof DashboardServersLazyRoute
   '/dashboard/': typeof DashboardIndexLazyRoute
   '/dashboard/log/balance': typeof DashboardLogBalanceLazyRoute
@@ -387,6 +441,7 @@ export interface FileRoutesById {
   '/dashboard/log/gift': typeof DashboardLogGiftLazyRoute
   '/dashboard/log/login': typeof DashboardLogLoginLazyRoute
   '/dashboard/log/mobile': typeof DashboardLogMobileLazyRoute
+  '/dashboard/log/network-activity': typeof DashboardLogNetworkActivityLazyRoute
   '/dashboard/log/register': typeof DashboardLogRegisterLazyRoute
   '/dashboard/log/reset-subscribe': typeof DashboardLogResetSubscribeLazyRoute
   '/dashboard/log/server-traffic': typeof DashboardLogServerTrafficLazyRoute
@@ -405,6 +460,7 @@ export interface FileRoutesById {
   '/dashboard/subscribe/': typeof DashboardSubscribeIndexLazyRoute
   '/dashboard/system/': typeof DashboardSystemIndexLazyRoute
   '/dashboard/ticket/': typeof DashboardTicketIndexLazyRoute
+  '/dashboard/tutorial/': typeof DashboardTutorialIndexLazyRoute
   '/dashboard/user/': typeof DashboardUserIndexLazyRoute
 }
 export interface FileRouteTypes {
@@ -412,7 +468,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dashboard'
+    | '/dashboard/node-latency-monitor'
     | '/dashboard/nodes'
+    | '/dashboard/probe-agent-results'
     | '/dashboard/servers'
     | '/dashboard/'
     | '/dashboard/log/balance'
@@ -421,6 +479,7 @@ export interface FileRouteTypes {
     | '/dashboard/log/gift'
     | '/dashboard/log/login'
     | '/dashboard/log/mobile'
+    | '/dashboard/log/network-activity'
     | '/dashboard/log/register'
     | '/dashboard/log/reset-subscribe'
     | '/dashboard/log/server-traffic'
@@ -439,11 +498,14 @@ export interface FileRouteTypes {
     | '/dashboard/subscribe'
     | '/dashboard/system'
     | '/dashboard/ticket'
+    | '/dashboard/tutorial'
     | '/dashboard/user'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/dashboard/node-latency-monitor'
     | '/dashboard/nodes'
+    | '/dashboard/probe-agent-results'
     | '/dashboard/servers'
     | '/dashboard'
     | '/dashboard/log/balance'
@@ -452,6 +514,7 @@ export interface FileRouteTypes {
     | '/dashboard/log/gift'
     | '/dashboard/log/login'
     | '/dashboard/log/mobile'
+    | '/dashboard/log/network-activity'
     | '/dashboard/log/register'
     | '/dashboard/log/reset-subscribe'
     | '/dashboard/log/server-traffic'
@@ -470,12 +533,15 @@ export interface FileRouteTypes {
     | '/dashboard/subscribe'
     | '/dashboard/system'
     | '/dashboard/ticket'
+    | '/dashboard/tutorial'
     | '/dashboard/user'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
+    | '/dashboard/node-latency-monitor'
     | '/dashboard/nodes'
+    | '/dashboard/probe-agent-results'
     | '/dashboard/servers'
     | '/dashboard/'
     | '/dashboard/log/balance'
@@ -484,6 +550,7 @@ export interface FileRouteTypes {
     | '/dashboard/log/gift'
     | '/dashboard/log/login'
     | '/dashboard/log/mobile'
+    | '/dashboard/log/network-activity'
     | '/dashboard/log/register'
     | '/dashboard/log/reset-subscribe'
     | '/dashboard/log/server-traffic'
@@ -502,6 +569,7 @@ export interface FileRouteTypes {
     | '/dashboard/subscribe/'
     | '/dashboard/system/'
     | '/dashboard/ticket/'
+    | '/dashboard/tutorial/'
     | '/dashboard/user/'
   fileRoutesById: FileRoutesById
 }
@@ -540,6 +608,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardServersLazyRouteImport
       parentRoute: typeof DashboardRouteLazyRoute
     }
+    '/dashboard/probe-agent-results': {
+      id: '/dashboard/probe-agent-results'
+      path: '/probe-agent-results'
+      fullPath: '/dashboard/probe-agent-results'
+      preLoaderRoute: typeof DashboardProbeAgentResultsLazyRouteImport
+      parentRoute: typeof DashboardRouteLazyRoute
+    }
     '/dashboard/nodes': {
       id: '/dashboard/nodes'
       path: '/nodes'
@@ -547,11 +622,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardNodesLazyRouteImport
       parentRoute: typeof DashboardRouteLazyRoute
     }
+    '/dashboard/node-latency-monitor': {
+      id: '/dashboard/node-latency-monitor'
+      path: '/node-latency-monitor'
+      fullPath: '/dashboard/node-latency-monitor'
+      preLoaderRoute: typeof DashboardNodeLatencyMonitorLazyRouteImport
+      parentRoute: typeof DashboardRouteLazyRoute
+    }
     '/dashboard/user/': {
       id: '/dashboard/user/'
       path: '/user'
       fullPath: '/dashboard/user'
       preLoaderRoute: typeof DashboardUserIndexLazyRouteImport
+      parentRoute: typeof DashboardRouteLazyRoute
+    }
+    '/dashboard/tutorial/': {
+      id: '/dashboard/tutorial/'
+      path: '/tutorial'
+      fullPath: '/dashboard/tutorial'
+      preLoaderRoute: typeof DashboardTutorialIndexLazyRouteImport
       parentRoute: typeof DashboardRouteLazyRoute
     }
     '/dashboard/ticket/': {
@@ -680,6 +769,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLogRegisterLazyRouteImport
       parentRoute: typeof DashboardRouteLazyRoute
     }
+    '/dashboard/log/network-activity': {
+      id: '/dashboard/log/network-activity'
+      path: '/log/network-activity'
+      fullPath: '/dashboard/log/network-activity'
+      preLoaderRoute: typeof DashboardLogNetworkActivityLazyRouteImport
+      parentRoute: typeof DashboardRouteLazyRoute
+    }
     '/dashboard/log/mobile': {
       id: '/dashboard/log/mobile'
       path: '/log/mobile'
@@ -726,7 +822,9 @@ declare module '@tanstack/react-router' {
 }
 
 interface DashboardRouteLazyRouteChildren {
+  DashboardNodeLatencyMonitorLazyRoute: typeof DashboardNodeLatencyMonitorLazyRoute
   DashboardNodesLazyRoute: typeof DashboardNodesLazyRoute
+  DashboardProbeAgentResultsLazyRoute: typeof DashboardProbeAgentResultsLazyRoute
   DashboardServersLazyRoute: typeof DashboardServersLazyRoute
   DashboardIndexLazyRoute: typeof DashboardIndexLazyRoute
   DashboardLogBalanceLazyRoute: typeof DashboardLogBalanceLazyRoute
@@ -735,6 +833,7 @@ interface DashboardRouteLazyRouteChildren {
   DashboardLogGiftLazyRoute: typeof DashboardLogGiftLazyRoute
   DashboardLogLoginLazyRoute: typeof DashboardLogLoginLazyRoute
   DashboardLogMobileLazyRoute: typeof DashboardLogMobileLazyRoute
+  DashboardLogNetworkActivityLazyRoute: typeof DashboardLogNetworkActivityLazyRoute
   DashboardLogRegisterLazyRoute: typeof DashboardLogRegisterLazyRoute
   DashboardLogResetSubscribeLazyRoute: typeof DashboardLogResetSubscribeLazyRoute
   DashboardLogServerTrafficLazyRoute: typeof DashboardLogServerTrafficLazyRoute
@@ -753,11 +852,14 @@ interface DashboardRouteLazyRouteChildren {
   DashboardSubscribeIndexLazyRoute: typeof DashboardSubscribeIndexLazyRoute
   DashboardSystemIndexLazyRoute: typeof DashboardSystemIndexLazyRoute
   DashboardTicketIndexLazyRoute: typeof DashboardTicketIndexLazyRoute
+  DashboardTutorialIndexLazyRoute: typeof DashboardTutorialIndexLazyRoute
   DashboardUserIndexLazyRoute: typeof DashboardUserIndexLazyRoute
 }
 
 const DashboardRouteLazyRouteChildren: DashboardRouteLazyRouteChildren = {
+  DashboardNodeLatencyMonitorLazyRoute: DashboardNodeLatencyMonitorLazyRoute,
   DashboardNodesLazyRoute: DashboardNodesLazyRoute,
+  DashboardProbeAgentResultsLazyRoute: DashboardProbeAgentResultsLazyRoute,
   DashboardServersLazyRoute: DashboardServersLazyRoute,
   DashboardIndexLazyRoute: DashboardIndexLazyRoute,
   DashboardLogBalanceLazyRoute: DashboardLogBalanceLazyRoute,
@@ -766,6 +868,7 @@ const DashboardRouteLazyRouteChildren: DashboardRouteLazyRouteChildren = {
   DashboardLogGiftLazyRoute: DashboardLogGiftLazyRoute,
   DashboardLogLoginLazyRoute: DashboardLogLoginLazyRoute,
   DashboardLogMobileLazyRoute: DashboardLogMobileLazyRoute,
+  DashboardLogNetworkActivityLazyRoute: DashboardLogNetworkActivityLazyRoute,
   DashboardLogRegisterLazyRoute: DashboardLogRegisterLazyRoute,
   DashboardLogResetSubscribeLazyRoute: DashboardLogResetSubscribeLazyRoute,
   DashboardLogServerTrafficLazyRoute: DashboardLogServerTrafficLazyRoute,
@@ -784,6 +887,7 @@ const DashboardRouteLazyRouteChildren: DashboardRouteLazyRouteChildren = {
   DashboardSubscribeIndexLazyRoute: DashboardSubscribeIndexLazyRoute,
   DashboardSystemIndexLazyRoute: DashboardSystemIndexLazyRoute,
   DashboardTicketIndexLazyRoute: DashboardTicketIndexLazyRoute,
+  DashboardTutorialIndexLazyRoute: DashboardTutorialIndexLazyRoute,
   DashboardUserIndexLazyRoute: DashboardUserIndexLazyRoute,
 }
 

@@ -15,7 +15,9 @@
   "Maintenance": "维护",
   "Marketing Management": "营销管理",
   "Mobile": "短信",
+  "Network Activity": "网络活动",
   "Node Management": "节点管理",
+  "Probe Agent Results": "探测管理",
   "Order Management": "订单管理",
   "Payment Config": "支付配置",
   "Product Management": "商品管理",
@@ -30,6 +32,7 @@
   "System Config": "系统配置",
   "Ticket Management": "工单管理",
   "Traffic Details": "流量详情",
+  "Tutorial Management": "教程管理",
   "User Management": "用户管理",
   "Users & Support": "用户与支持"
 }

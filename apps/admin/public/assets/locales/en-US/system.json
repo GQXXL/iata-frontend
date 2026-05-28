@@ -4,7 +4,11 @@
     "cancel": "Cancel",
     "save": "Save Settings",
     "saveFailed": "Save Failed",
-    "saveSuccess": "Save Successful"
+    "saveSuccess": "Save Successful",
+    "edit": "Edit",
+    "delete": "Delete",
+    "creating": "Creating...",
+    "saving": "Saving..."
   },
   "currency": {
     "accessKey": "API Key",
@@ -93,7 +97,9 @@
     "siteName": "Site Name",
     "siteNameDescription": "Used for displaying the site name in designated locations",
     "siteNamePlaceholder": "Enter site name",
-    "title": "Site Configuration"
+    "title": "Site Configuration",
+    "showServerStatusMenu": "Show User Node Status Menu",
+    "showServerStatusMenuDescription": "Control whether the user-side \"Node Status\" menu is displayed"
   },
   "tos": {
     "description": "Edit and manage terms of service content",
@@ -132,5 +138,47 @@
     "seconds": "seconds",
     "times": "time(s)",
     "title": "Verification Code Settings"
+  },
+  "probe": {
+    "pageTitle": "Detection Management",
+    "serverId": "Server ID",
+    "status": "Probe Status",
+    "online": "Online",
+    "offline": "Offline",
+    "lastHeartbeat": "Last Heartbeat",
+    "version": "Version",
+    "actions": "Actions",
+    "deleted": "Probe node deleted",
+    "connect": "Connect",
+    "selectServerId": "Select server_id",
+    "nodeNameOptional": "Probe node name (optional)",
+    "tokenGenerateFailed": "Token generation failed",
+    "createdWithScript": "Probe node created, fixed token and one-click script generated",
+    "createNode": "Create Probe Node",
+    "heartbeatHidden": "Heartbeat hidden",
+    "heartbeatShown": "Heartbeat shown",
+    "showing": "Showing...",
+    "hiding": "Hiding...",
+    "showHeartbeat": "Show Heartbeat",
+    "hideHeartbeat": "Hide Heartbeat",
+    "tokenCopied": "Token copied",
+    "copyNewToken": "Copy New Token",
+    "sortSaved": "Sort saved",
+    "editNode": "Edit Node",
+    "editNodeDesc": "You can modify this Probe node name",
+    "enterNodeName": "Please enter node name",
+    "nodeNameRequired": "Node name cannot be empty",
+    "nodeNameUpdated": "Node name updated",
+    "deployScriptTitle": "Probe One-click Deploy Script (Copy & Close)",
+    "deployScriptDesc": "The script is auto-selected by default. Press Ctrl+C to copy, or click \"Copy & Close\".",
+    "currentNode": "Current node",
+    "scriptCopiedAndClosed": "Script copied ({{len}} chars), dialog closed",
+    "autoCopyFailed": "Auto copy failed: script is selected, press Ctrl+C to copy",
+    "copyAndClose": "Copy & Close",
+    "scriptPlaceholder": "Script will be generated after creating a new Probe node",
+    "manualCopyHint": "If clipboard access is blocked, click \"Select Script\" then press Ctrl+C to copy manually.",
+    "selectScript": "Select Script",
+    "copyFailedManual": "Copy failed, please copy manually below",
+    "node": "Node"
   }
 }

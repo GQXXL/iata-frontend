@@ -337,6 +337,77 @@ export async function updateVerifyCodeConfig(
   );
 }
 
+/** Generate probe agent token POST /v1/admin/system/probe_agent/token */
+export async function generateProbeAgentToken(
+  body: API.GenerateProbeAgentTokenRequest,
+  options?: { [key: string]: any }
+) {
+  return request<API.Response & { data?: API.GenerateProbeAgentTokenResponse }>(
+    `${import.meta.env.VITE_API_PREFIX || ""}/v1/admin/system/probe_agent/token`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: body,
+      ...(options || {}),
+    }
+  );
+}
+
+/** Query probe agent list GET /v1/admin/system/probe_agent/list */
+export async function queryProbeAgentList(
+  params: API.QueryProbeAgentListRequest,
+  options?: { [key: string]: any }
+) {
+  return request<API.Response & { data?: API.QueryProbeAgentListResponse }>(
+    `${import.meta.env.VITE_API_PREFIX || ""}/v1/admin/system/probe_agent/list`,
+    {
+      method: "GET",
+      params: {
+        ...params,
+      },
+      ...(options || {}),
+    }
+  );
+}
+
+/** Update probe agent target PUT /v1/admin/system/probe_agent/target */
+export async function updateProbeAgentTarget(
+  body: API.UpdateProbeAgentTargetRequest,
+  options?: { [key: string]: any }
+) {
+  return request<API.Response & { data?: any }>(
+    `${import.meta.env.VITE_API_PREFIX || ""}/v1/admin/system/probe_agent/target`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: body,
+      ...(options || {}),
+    }
+  );
+}
+
+/** Delete probe agent DELETE /v1/admin/system/probe_agent */
+export async function deleteProbeAgent(
+  body: API.DeleteProbeAgentRequest,
+  options?: { [key: string]: any }
+) {
+  return request<API.Response & { data?: any }>(
+    `${import.meta.env.VITE_API_PREFIX || ""}/v1/admin/system/probe_agent`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: body,
+      ...(options || {}),
+    }
+  );
+}
+
 /** Get verify config GET /v1/admin/system/verify_config */
 export async function getVerifyConfig(options?: { [key: string]: any }) {
   return request<API.Response & { data?: API.VerifyConfig }>(

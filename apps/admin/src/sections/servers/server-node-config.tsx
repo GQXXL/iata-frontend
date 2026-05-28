@@ -190,6 +190,13 @@ export default function ServerNodeConfig({ server }: { server: API.Server }) {
       toast.success(t("server_node_config.saveSuccess", "Saved successfully"));
       await refetch();
       setOpen(false);
+    } catch {
+      toast.error(
+        t(
+          "server_node_config.saveError",
+          "Save failed, please check server API and try again."
+        )
+      );
     } finally {
       setSaving(false);
     }

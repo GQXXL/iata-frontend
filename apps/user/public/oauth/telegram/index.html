@@ -10,13 +10,24 @@
 
     // Providers redirect to a path without URL fragments (#). Our app uses hash routing.
     // Bridge /oauth/<provider>[/]?... -> /#/oauth/<provider>?...
+    // Telegram may return callback payload in location.hash (e.g. #tgAuthResult=...).
+    // Preserve it by converting hash payload into query params for the hash-router page.
     (() => {
       try {
         let path = window.location.pathname || "/";
         path = path.replace(/\/$/, "");
 
         const search = window.location.search || "";
-        const target = `/#${path}${search}`;
+        const hash = window.location.hash || "";
+
+        // Prefer explicit query params, fallback to hash payload from Telegram.
+        // Input:  #tgAuthResult=xxx  -> ?tgAuthResult=xxx
+        const normalizedHashQuery =
+          hash.startsWith("#") && hash.length > 1 ? `?${hash.slice(1)}` : "";
+
+        const query = search || normalizedHashQuery;
+        const target = `/#${path}${query}`;
+
         window.location.replace(target);
       } catch (_e) {
         window.location.replace("/#/auth");

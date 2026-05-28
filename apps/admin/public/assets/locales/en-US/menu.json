@@ -15,7 +15,9 @@
   "Maintenance": "Maintenance",
   "Marketing Management": "Marketing Management",
   "Mobile": "Mobile",
+  "Network Activity": "Network Activity",
   "Node Management": "Node Management",
+  "Probe Agent Results": "Detection Management",
   "Order Management": "Order Management",
   "Payment Config": "Payment Config",
   "Product Management": "Product Management",
@@ -30,6 +32,7 @@
   "System Config": "System Config",
   "Ticket Management": "Ticket Management",
   "Traffic Details": "Traffic Details",
+  "Tutorial Management": "Tutorial Management",
   "User Management": "User Management",
   "Users & Support": "Users & Support"
 }

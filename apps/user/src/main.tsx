@@ -44,6 +44,47 @@ initializeI18n({
 
 window.logout = Logout;
 
+// Recover from stale chunk / dynamic import mismatch after deploy
+const CHUNK_RELOAD_FLAG = "ppanel_chunk_reload_once";
+const shouldHandleChunkError = (msg?: string) =>
+  !!msg &&
+  (msg.includes("Failed to fetch dynamically imported module") ||
+    msg.includes("Importing a module script failed") ||
+    msg.includes("Loading chunk"));
+
+const reloadForChunkError = () => {
+  const alreadyReloaded = sessionStorage.getItem(CHUNK_RELOAD_FLAG) === "1";
+  if (alreadyReloaded) {
+    sessionStorage.removeItem(CHUNK_RELOAD_FLAG);
+  } else {
+    sessionStorage.setItem(CHUNK_RELOAD_FLAG, "1");
+    window.location.reload();
+  }
+};
+
+window.addEventListener(
+  "error",
+  (event) => {
+    const target = event.target as HTMLScriptElement | null;
+    if (target?.tagName === "SCRIPT") {
+      reloadForChunkError();
+      return;
+    }
+    const message = (event as ErrorEvent).message;
+    if (shouldHandleChunkError(message)) {
+      reloadForChunkError();
+    }
+  },
+  true
+);
+
+window.addEventListener("unhandledrejection", (event) => {
+  const reason = event.reason as { message?: string } | undefined;
+  if (shouldHandleChunkError(reason?.message)) {
+    reloadForChunkError();
+  }
+});
+
 // Create a new router instance
 const TanStackQueryProviderContext = TanStackQueryContext();
 const hashHistory = createHashHistory();

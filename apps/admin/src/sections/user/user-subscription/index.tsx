@@ -29,6 +29,29 @@ import { formatDate } from "@/utils/common";
 import { SubscriptionDetail } from "./subscription-detail";
 import { SubscriptionForm } from "./subscription-form";
 
+async function copyText(text: string) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  textarea.style.top = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+
+  try {
+    const copied = document.execCommand("copy");
+    if (!copied) throw new Error("copy command failed");
+  } finally {
+    document.body.removeChild(textarea);
+  }
+}
+
 export default function UserSubscription({ userId }: { userId: number }) {
   const { t } = useTranslation("user");
   const [loading, setLoading] = useState(false);
@@ -250,9 +273,7 @@ function RowMoreActions({
           <DropdownMenuItem
             onSelect={async (e) => {
               e.preventDefault();
-              await navigator.clipboard.writeText(
-                getUserSubscribeUrls(row.short, token)[0] || ""
-              );
+              await copyText(getUserSubscribeUrls(row.short, token)[0] || "");
               toast.success(t("copySuccess", "Copied successfully"));
             }}
           >
@@ -287,6 +308,18 @@ function RowMoreActions({
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link
+              search={{
+                user_id: userId,
+                user_subscribe_id: row.id,
+                subscribe_id: row.id,
+              }}
+              to="/dashboard/log/network-activity"
+            >
+              {t("networkActivity", "Network Activity")}
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link
               search={{ user_id: userId, user_subscribe_id: row.id }}
               to="/dashboard/log/subscribe"
             >
@@ -311,7 +344,7 @@ function RowMoreActions({
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link
-              search={{ user_id: userId, subscribe_id: row.id }}
+              search={{ user_id: userId, subscribe_id: row.subscribe_id }}
               to="/dashboard/log/traffic-details"
             >
               {t("trafficDetails", "Traffic Details")}

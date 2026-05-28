@@ -6,11 +6,18 @@ export function getPlatform(): string {
 
   const userAgent = navigator.userAgent.toLowerCase();
 
-  if (userAgent.includes("win")) return "windows";
-  if (userAgent.includes("mac")) return "macos";
-  if (userAgent.includes("linux")) return "linux";
+  // Order matters: iOS UA commonly contains "like Mac OS X", so detect mobile first.
   if (userAgent.includes("android")) return "android";
-  if (userAgent.includes("iphone") || userAgent.includes("ipad")) return "ios";
+  if (
+    userAgent.includes("iphone") ||
+    userAgent.includes("ipad") ||
+    userAgent.includes("ipod")
+  )
+    return "ios";
+  if (userAgent.includes("win")) return "windows";
+  if (userAgent.includes("macintosh") || userAgent.includes("mac os x"))
+    return "macos";
+  if (userAgent.includes("linux")) return "linux";
 
   return "unknown";
 }

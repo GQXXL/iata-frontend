@@ -1,4 +1,6 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useGlobalStore } from "@/stores/global";
 
 export interface NavItem {
   title: string;
@@ -13,8 +15,40 @@ export interface NavGroup {
   items?: NavItem[];
 }
 
+interface UserCustomData {
+  features?: {
+    show_server_status_menu?: boolean;
+  };
+}
+
+function parseUserCustomData(raw: unknown): UserCustomData {
+  try {
+    let value: unknown = raw;
+    for (let i = 0; i < 3; i++) {
+      if (typeof value === "string") {
+        value = JSON.parse(value || "{}");
+        continue;
+      }
+      break;
+    }
+    if (value && typeof value === "object") return value as UserCustomData;
+    return {};
+  } catch {
+    return {};
+  }
+}
+
 export function useNavs() {
   const { t } = useTranslation("components");
+  const { common } = useGlobalStore();
+
+  const showServerStatusMenu = useMemo(() => {
+    const customData = parseUserCustomData(common.site?.custom_data);
+    const raw = customData?.features?.show_server_status_menu as unknown;
+    if (raw === false || raw === "false") return false;
+    if (raw === true || raw === "true") return true;
+    return true;
+  }, [common.site?.custom_data]);
 
   const navs: NavGroup[] = [
     {
@@ -40,6 +74,15 @@ export function useNavs() {
           icon: "uil:shop",
           title: t("menu.subscribe", "Subscribe"),
         },
+        ...(showServerStatusMenu
+          ? [
+              {
+                url: "/server-status",
+                icon: "uil:server-network",
+                title: t("menu.serverStatus", "Node Status"),
+              },
+            ]
+          : []),
       ],
     },
     {

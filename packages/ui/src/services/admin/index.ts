@@ -18,6 +18,7 @@ import * as subscribe from "./subscribe";
 import * as system from "./system";
 import * as ticket from "./ticket";
 import * as tool from "./tool";
+import * as tutorial from "./tutorial";
 import * as user from "./user";
 export default {
   ads,
@@ -27,6 +28,7 @@ export default {
   console,
   coupon,
   document,
+  tutorial,
   log,
   marketing,
   order,

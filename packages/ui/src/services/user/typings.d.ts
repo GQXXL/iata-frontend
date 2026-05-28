@@ -414,30 +414,7 @@ declare namespace API {
     protocol: string;
     address: string;
     port: number;
-    user?: string;
     password: string;
-    uuid?: string;
-    cipher?: string;
-    security?: string;
-    sni?: string;
-    allow_insecure?: boolean;
-    fingerprint?: string;
-    transport?: string;
-    host?: string;
-    path?: string;
-    service_name?: string;
-    flow?: string;
-    uot?: boolean;
-    uot_version?: number;
-    congestion_controller?: string;
-    udp_stream?: boolean;
-    reduce_rtt?: boolean;
-    heartbeat?: number;
-    reality_public_key?: string;
-    reality_short_id?: string;
-    spider_x?: string;
-    settings?: string;
-    stream_settings?: string;
     rules: string[];
   };
 
@@ -697,8 +674,8 @@ declare namespace API {
   type QueryAnnouncementParams = {
     page: number;
     size: number;
-    pinned?: boolean;
-    popup?: boolean;
+    pinned: boolean;
+    popup: boolean;
   };
 
   type QueryAnnouncementRequest = {
@@ -1266,6 +1243,13 @@ declare namespace API {
     country: string;
     city: string;
     created_at: number;
+    status?: string;
+    online?: boolean;
+    ct_latency_ms?: number;
+    cu_latency_ms?: number;
+    cm_latency_ms?: number;
+    latency_updated_at?: number;
+    interval_seconds?: number;
   };
 
   type VerifyCodeConfig = {

@@ -1,7 +1,6 @@
 import yaml from "js-yaml";
-import { CDN_URL } from "@/config";
 
-const BASE_URL = `${CDN_URL}/gh/perfect-panel/ppanel-tutorial`;
+const BASE_URL = import.meta.env.VITE_TUTORIAL_BASE_URL || "tutorial";
 
 // async function getVersion() {
 //   // API rate limit: 60 requests per hour
@@ -13,13 +12,7 @@ const BASE_URL = `${CDN_URL}/gh/perfect-panel/ppanel-tutorial`;
 // }
 
 async function getVersionPath() {
-  // return getVersion()
-  //   .then((version) => `${BASE_URL}@${version}`)
-  //   .catch((error) => {
-  //     console.warn('Error fetching the version:', error);
-  //     return `${BASE_URL}@latest`;
-  //   });
-  return `${BASE_URL}@latest`;
+  return BASE_URL;
 }
 
 export async function getTutorial(path: string): Promise<{
@@ -29,7 +22,9 @@ export async function getTutorial(path: string): Promise<{
   const versionPath = await getVersionPath();
   try {
     const url = `${versionPath}/${path}`;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      cache: "no-store",
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -61,6 +56,7 @@ export async function getTutorial(path: string): Promise<{
 type TutorialItem = {
   title: string;
   path: string;
+  show?: boolean;
   subItems?: TutorialItem[];
 };
 
@@ -87,6 +83,18 @@ export async function getTutorialList() {
     .forEach((item) => {
       item.subItems?.forEach(processIcon);
     });
+
+  Object.keys(navigation).forEach((locale) => {
+    navigation[locale] = (navigation[locale] || [])
+      .filter((item) => item.show !== false)
+      .map((item) => ({
+        ...item,
+        subItems: item.subItems?.filter((sub) => sub.show !== false),
+      }))
+      .filter(
+        (item) => !item.subItems || item.subItems.length > 0 || !!item.path
+      );
+  });
 
   return new Map(Object.entries(navigation));
 }

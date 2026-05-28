@@ -518,7 +518,9 @@ export default function Content() {
                                               rel="noopener noreferrer"
                                               target="_blank"
                                             >
-                                              {t("download", "Download")}
+                                              {platform === "ios"
+                                                ? "查看ID"
+                                                : t("download", "Download")}
                                             </a>
                                           </Button>
                                         )}

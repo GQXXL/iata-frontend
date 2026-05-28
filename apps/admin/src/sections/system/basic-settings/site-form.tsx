@@ -19,6 +19,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@workspace/ui/components/sheet";
+import { Switch } from "@workspace/ui/components/switch";
 import { Textarea } from "@workspace/ui/components/textarea";
 import { JSONEditor } from "@workspace/ui/composed/editor/json";
 import { EnhancedInput } from "@workspace/ui/composed/enhanced-input";
@@ -46,10 +47,43 @@ const siteSchema = z.object({
 
 type SiteFormData = z.infer<typeof siteSchema>;
 
+interface SiteCustomData {
+  features?: {
+    show_server_status_menu?: boolean;
+  };
+  [key: string]: unknown;
+}
+
+function parseCustomData(value: unknown): SiteCustomData {
+  try {
+    let parsed: unknown = value;
+    for (let i = 0; i < 3; i++) {
+      if (typeof parsed === "string") {
+        parsed = JSON.parse(parsed || "{}");
+        continue;
+      }
+      break;
+    }
+    if (parsed && typeof parsed === "object") return parsed as SiteCustomData;
+    return {};
+  } catch {
+    return {};
+  }
+}
+
+function stringifyCustomData(value: SiteCustomData): string {
+  try {
+    return JSON.stringify(value || {});
+  } catch {
+    return "{}";
+  }
+}
+
 export default function SiteConfig() {
   const { t } = useTranslation("system");
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showServerStatusMenu, setShowServerStatusMenu] = useState(true);
 
   const { data, refetch } = useQuery({
     queryKey: ["getSiteConfig"],
@@ -76,13 +110,30 @@ export default function SiteConfig() {
   useEffect(() => {
     if (data) {
       form.reset(data);
+      const parsed = parseCustomData(data.custom_data);
+      setShowServerStatusMenu(
+        parsed?.features?.show_server_status_menu !== false
+      );
     }
   }, [data, form]);
 
   async function onSubmit(values: SiteFormData) {
     setLoading(true);
     try {
-      await updateSiteConfig(values as API.SiteConfig);
+      const currentCustomData = parseCustomData(values.custom_data);
+      const payloadCustomData: SiteCustomData = {
+        ...currentCustomData,
+        features: {
+          ...(currentCustomData.features || {}),
+          show_server_status_menu: showServerStatusMenu,
+        },
+      };
+
+      const payload: API.SiteConfig = {
+        ...(values as API.SiteConfig),
+        custom_data: stringifyCustomData(payloadCustomData),
+      };
+      await updateSiteConfig(payload);
       toast.success(t("common.saveSuccess", "Save Successful"));
       refetch();
       setOpen(false);
@@ -301,7 +352,20 @@ export default function SiteConfig() {
                     <FormLabel>{t("site.customData", "Custom Data")}</FormLabel>
                     <FormControl>
                       <JSONEditor
-                        onBlur={(value) => field.onChange(value)}
+                        onBlur={(value) => {
+                          const editorData = parseCustomData(value);
+                          const next: SiteCustomData = {
+                            ...editorData,
+                            features: {
+                              ...(editorData.features || {}),
+                            },
+                          };
+                          next.features = {
+                            ...(next.features || {}),
+                            show_server_status_menu: showServerStatusMenu,
+                          };
+                          field.onChange(stringifyCustomData(next));
+                        }}
                         schema={{
                           type: "object",
                           additionalProperties: true,
@@ -342,6 +406,39 @@ export default function SiteConfig() {
                         value={field.value}
                       />
                     </FormControl>
+                    <div className="mt-3 rounded-md border p-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <p className="font-medium text-sm">
+                            {t(
+                              "site.showServerStatusMenu",
+                              "Show User Node Status Menu"
+                            )}
+                          </p>
+                          <p className="text-muted-foreground text-xs">
+                            {t(
+                              "site.showServerStatusMenuDescription",
+                              "Control whether the user-side 'Node Status' menu is displayed"
+                            )}
+                          </p>
+                        </div>
+                        <Switch
+                          checked={showServerStatusMenu}
+                          onCheckedChange={(checked) => {
+                            setShowServerStatusMenu(checked);
+                            const current = parseCustomData(field.value);
+                            const next = {
+                              ...current,
+                              features: {
+                                ...(current.features || {}),
+                                show_server_status_menu: checked,
+                              },
+                            };
+                            field.onChange(stringifyCustomData(next));
+                          }}
+                        />
+                      </div>
+                    </div>
                     <FormDescription>
                       {t(
                         "site.customDataDescription",

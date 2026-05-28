@@ -257,7 +257,9 @@ export default function ThirdPartyAccounts() {
     } else {
       const res = await bindOAuth({
         method: account.id,
-        redirect: `${window.location.origin}/bind/${account.id}`,
+        // OAuth providers may return callback data in URL hash and static hosting needs
+        // trailing slash to serve /bind/<provider>/index.html bridge page.
+        redirect: `${window.location.origin}/bind/${account.id}/`,
       });
       if (res.data?.data?.redirect) {
         window.location.href = res.data.data.redirect;

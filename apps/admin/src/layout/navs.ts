@@ -35,6 +35,11 @@ export function useNavs() {
             icon: "flat-color-icons:mind-map",
           },
           {
+            title: t("Probe Agent Results", "Probe Agent Results"),
+            url: "/dashboard/probe-agent-results",
+            icon: "flat-color-icons:radar-plot",
+          },
+          {
             title: t("Subscribe Config", "Subscribe Config"),
             url: "/dashboard/subscribe",
             icon: "flat-color-icons:ruler",
@@ -92,6 +97,11 @@ export function useNavs() {
             title: t("Document Management", "Document Management"),
             url: "/dashboard/document",
             icon: "flat-color-icons:document",
+          },
+          {
+            title: t("Tutorial Management", "Tutorial Management"),
+            url: "/dashboard/tutorial",
+            icon: "flat-color-icons:reading",
           },
         ],
       },
@@ -172,6 +182,11 @@ export function useNavs() {
           {
             title: t("Traffic Details", "Traffic Details"),
             url: "/dashboard/log/traffic-details",
+            icon: "flat-color-icons:combo-chart",
+          },
+          {
+            title: t("Network Activity", "Network Activity"),
+            url: "/dashboard/log/network-activity",
             icon: "flat-color-icons:combo-chart",
           },
           {

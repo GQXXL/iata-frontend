@@ -32,6 +32,17 @@ export default function Nodes() {
   const { getServerName, getServerAddress, getProtocolPort } = useServer();
   const { fetchNodes, fetchTags } = useNode();
 
+  const normalizeEnabled = (value: unknown) => {
+    if (typeof value === "boolean") return value;
+    if (typeof value === "number") return value === 1;
+    if (typeof value === "string") {
+      const v = value.trim().toLowerCase();
+      if (["1", "true", "on", "yes", "enabled"].includes(v)) return true;
+      if (["0", "false", "off", "no", "disabled", ""].includes(v)) return false;
+    }
+    return Boolean(value);
+  };
+
   return (
     <ProTable<API.Node, { search: string }>
       action={ref}
@@ -140,18 +151,29 @@ export default function Nodes() {
           id: "enabled",
           header: t("enabled", "Enabled"),
           cell: ({ row }) => (
-            <Switch
-              checked={row.original.enabled}
-              onCheckedChange={async (v) => {
-                await toggleNodeStatus({ id: row.original.id, enable: v });
-                toast.success(
-                  v ? t("enabled_on", "Enabled") : t("enabled_off", "Disabled")
-                );
-                ref.current?.refresh();
-                fetchNodes();
-                fetchTags();
-              }}
-            />
+            <div
+              onClick={(e) => e.stopPropagation()}
+              onPointerDown={(e) => e.stopPropagation()}
+            >
+              <Switch
+                checked={normalizeEnabled(row.original.enabled)}
+                onCheckedChange={async (v) => {
+                  try {
+                    await toggleNodeStatus({ id: row.original.id, enable: v });
+                    toast.success(
+                      v
+                        ? t("enabled_on", "Enabled")
+                        : t("enabled_off", "Disabled")
+                    );
+                    ref.current?.refresh();
+                    fetchNodes();
+                    fetchTags();
+                  } catch {
+                    // error toast is handled globally by request interceptor
+                  }
+                }}
+              />
+            </div>
           ),
         },
         { accessorKey: "name", header: t("name", "Name") },

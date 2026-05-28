@@ -108,6 +108,7 @@
   "subscriptionId": "subscriptionId",
   "subscriptionInfo": "subscriptionInfo",
   "subscriptionList": "Subscription List",
+  "networkActivity": "Network Activity",
   "subscriptionLogs": "Subscription Logs",
   "subscriptionName": "subscriptionName",
   "subscriptionNotifications": "Subscription Notifications",

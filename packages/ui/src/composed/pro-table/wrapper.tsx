@@ -29,7 +29,13 @@ export function ProTableWrapper<TData extends { id?: string | number }>({
   setData: React.Dispatch<React.SetStateAction<TData[]>>;
 }) {
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    // Add a small drag threshold so normal clicks (e.g. Switch/Button) are not
+    // swallowed by dnd pointer sensor.
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 

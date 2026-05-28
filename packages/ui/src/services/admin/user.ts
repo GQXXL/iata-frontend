@@ -505,3 +505,20 @@ export async function getUserSubscribeTrafficLogs(
     }
   );
 }
+
+/** Get user network activity GET /v1/admin/user/subscribe/network_activity */
+export async function getUserNetworkActivity(
+  params: API.GetUserNetworkActivityRequest,
+  options?: { [key: string]: any }
+) {
+  return request<API.Response & { data?: API.GetUserNetworkActivityResponse }>(
+    `${import.meta.env.VITE_API_PREFIX || ""}/v1/admin/user/subscribe/network_activity`,
+    {
+      method: "GET",
+      params: {
+        ...params,
+      },
+      ...(options || {}),
+    }
+  );
+}

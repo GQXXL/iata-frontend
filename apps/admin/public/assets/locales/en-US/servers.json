@@ -125,13 +125,12 @@
       "outbound_port_placeholder": "Port number",
       "outbound_protocol_placeholder": "Select protocol",
       "outbound_rules_placeholder": "One rule per line",
-      "outbound_settings": "Raw settings JSON",
-      "outbound_stream_settings": "Raw streamSettings JSON",
-      "outbound_user": "Username",
       "reset": "Reset",
       "start_time": "Start time",
       "traffic_report_threshold": "Traffic Report Threshold",
-      "traffic_report_threshold_desc": "Set the minimum threshold for traffic reporting."
+      "traffic_report_threshold_desc": "Set the minimum threshold for traffic reporting.",
+      "outbound_user": "Username",
+      "add_outbound": "Add outbound"
     },
     "saveSuccess": "Saved successfully",
     "tabs": {
@@ -141,15 +140,6 @@
       "outbound": "Outbound Rules"
     },
     "title": "Node configuration"
-  },
-  "server_node_config": {
-    "inherit_block": "Inherit global block rules",
-    "inherit_dns": "Inherit global DNS",
-    "inherit_ip_strategy": "Inherit global IP strategy",
-    "inherit_outbound": "Inherit global outbound rules",
-    "saveSuccess": "Saved successfully",
-    "title": "Node Config",
-    "trigger": "Node Config"
   },
   "server_key": "Server Key",
   "service_name": "Service Name",
@@ -164,5 +154,16 @@
   "unlimited": "Unlimited",
   "up_mbps": "Upload Bandwidth",
   "updated": "Updated",
-  "user": "User"
+  "user": "User",
+  "server_node_config": {
+    "trigger": "Node Config",
+    "title": "Node Config",
+    "loadError": "Failed to load node config. Please close and try again.",
+    "saveSuccess": "Saved successfully",
+    "inherit_ip_strategy": "Inherit global IP strategy",
+    "inherit_dns": "Inherit global DNS",
+    "inherit_block": "Inherit global block rules",
+    "inherit_outbound": "Inherit global outbound rules",
+    "saveError": "Save failed, please check server API and try again."
+  }
 }
