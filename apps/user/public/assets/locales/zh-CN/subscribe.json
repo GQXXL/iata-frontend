@@ -46,7 +46,7 @@
   "renewSubscription": "续订",
   "resetPrice": "重置价格",
   "resetTraffic": "重置流量",
-  "resetTrafficDescription": "将流量重置为零，并开始新的计费周期",
+  "resetTrafficDescription": "仅将已使用流量重置为零；套餐和到期时间保持不变。",
   "resetTrafficTitle": "重置流量",
   "subscriptionNotFound": "未找到订阅",
   "unsubscribe": {

@@ -46,7 +46,7 @@
   "renewSubscription": "Renew Subscription",
   "resetPrice": "Reset Price",
   "resetTraffic": "Reset Traffic",
-  "resetTrafficDescription": "Reset traffic to zero, and start a new billing cycle",
+  "resetTrafficDescription": "Reset only the used traffic to zero; the plan and expiration date remain unchanged.",
   "resetTrafficTitle": "Reset Traffic",
   "subscriptionNotFound": "Subscription not found",
   "unsubscribe": {
