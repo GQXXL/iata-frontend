@@ -98,11 +98,6 @@ export function useNavs() {
             url: "/dashboard/document",
             icon: "flat-color-icons:document",
           },
-          {
-            title: t("Tutorial Management", "Tutorial Management"),
-            url: "/dashboard/tutorial",
-            icon: "flat-color-icons:reading",
-          },
         ],
       },
 
