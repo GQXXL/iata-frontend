@@ -68,12 +68,20 @@ export default function ProbeAgentResults() {
 
   const baseUrl = useMemo(() => {
     const envPrefix = import.meta.env.VITE_API_PREFIX as string | undefined;
-    if (envPrefix && /^https?:\/\//i.test(envPrefix)) {
-      return envPrefix.replace(/\/$/, "");
+    if (envPrefix) {
+      if (/^https?:\/\//i.test(envPrefix)) {
+        return envPrefix.replace(/\/$/, "");
+      }
+      // 支持把 VITE_API_PREFIX 设为相对路径（如 /v1），自动拼到当前 origin
+      if (typeof window !== "undefined") {
+        return `${window.location.origin}${envPrefix.startsWith("/") ? "" : "/"}${envPrefix}`.replace(
+          /\/$/,
+          ""
+        );
+      }
     }
     if (typeof window !== "undefined") {
-      const { protocol, hostname } = window.location;
-      return `${protocol}//${hostname}:8080`;
+      return window.location.origin;
     }
     return "http://127.0.0.1:8080";
   }, []);
