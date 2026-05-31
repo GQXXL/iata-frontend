@@ -155,7 +155,6 @@ export default function ServerInstall({ server }: Props) {
                 aria-label={t("installCommand", "Install command")}
                 className="min-h-[88px] w-full rounded border p-2 font-mono text-sm"
                 readOnly
-                ref={nodeInstallTextareaRef}
                 value={installCommand}
               />
               <Button
@@ -173,17 +172,10 @@ export default function ServerInstall({ server }: Props) {
             <Label>{t("networkActivityInstall", "网络活动一键安装命令")}</Label>
             <div className="flex flex-col gap-2">
               <textarea
-<<<<<<< Updated upstream
-                aria-label={t("networkActivityInstall", "网络活动一键安装命令")}
-                className="min-h-[88px] w-full rounded border p-2 font-mono text-sm"
-                readOnly
-                ref={networkActivityTextareaRef}
-=======
                 ref={networkActivityTextareaRef}
                 aria-label={t("networkActivityInstall", "网络活动一键安装命令")}
                 className="min-h-[88px] w-full rounded border p-2 font-mono text-sm"
                 readOnly
->>>>>>> Stashed changes
                 value={networkActivityCommand}
               />
               <Button
