@@ -39,6 +39,19 @@ export function formatDate(date?: Date | number, showTime = true) {
   });
 }
 
+export function getTodayDateByTimezone(timeZone = "Asia/Shanghai") {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const y = parts.find((x) => x.type == "year")?.value;
+  const m = parts.find((x) => x.type == "month")?.value;
+  const d = parts.find((x) => x.type == "day")?.value;
+  return `${y}-${m}-${d}`;
+}
+
 export function setAuthorization(token: string): void {
   setCookie("Authorization", token);
 }

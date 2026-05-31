@@ -7,7 +7,7 @@ import { getUserNetworkActivity } from "@workspace/ui/services/admin/user";
 import { useTranslation } from "react-i18next";
 import { IpLink } from "@/components/ip-link";
 import { UserDetail, UserSubscribeDetail } from "@/sections/user/user-detail";
-import { formatDate } from "@/utils/common";
+import { formatDate, getTodayDateByTimezone } from "@/utils/common";
 
 type NetworkActivityRow = {
   id: number;
@@ -248,7 +248,7 @@ export default function NetworkActivityPage() {
         );
 
         if (needUsids.length > 0) {
-          const today = new Date().toISOString().split("T")[0];
+          const today = getTodayDateByTimezone("Asia/Shanghai");
           await Promise.all(
             needUsids.map(async (usid) => {
               try {

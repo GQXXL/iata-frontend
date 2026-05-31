@@ -7,13 +7,13 @@ import { filterResetSubscribeLog } from "@workspace/ui/services/admin/log";
 import { useTranslation } from "react-i18next";
 import { OrderLink } from "@/components/order-link";
 import { UserDetail, UserSubscribeDetail } from "@/sections/user/user-detail";
-import { formatDate } from "@/utils/common";
+import { formatDate, getTodayDateByTimezone } from "@/utils/common";
 
 export default function ResetSubscribeLogPage() {
   const { t } = useTranslation("log");
   const sp = useSearch({ strict: false }) as Record<string, string | undefined>;
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = getTodayDateByTimezone("Asia/Shanghai");
 
   const getResetSubscribeTypeText = (type: number) => {
     const typeText = t(`type.${type}`, { defaultValue: "" });

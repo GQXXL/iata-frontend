@@ -8,13 +8,13 @@ import { useTranslation } from "react-i18next";
 import { Display } from "@/components/display";
 import { OrderLink } from "@/components/order-link";
 import { UserDetail, UserSubscribeDetail } from "@/sections/user/user-detail";
-import { formatDate } from "@/utils/common";
+import { formatDate, getTodayDateByTimezone } from "@/utils/common";
 
 export default function GiftLogPage() {
   const { t } = useTranslation("log");
   const sp = useSearch({ strict: false }) as Record<string, string | undefined>;
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = getTodayDateByTimezone("Asia/Shanghai");
 
   const getGiftTypeText = (type: number) => {
     const typeText = t(`type.${type}`, { defaultValue: "" });

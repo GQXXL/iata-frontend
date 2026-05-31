@@ -7,14 +7,14 @@ import { formatBytes } from "@workspace/ui/utils/formatting";
 import { useTranslation } from "react-i18next";
 import { UserDetail, UserSubscribeDetail } from "@/sections/user/user-detail";
 import { useServer } from "@/stores/server";
-import { formatDate } from "@/utils/common";
+import { formatDate, getTodayDateByTimezone } from "@/utils/common";
 
 export default function TrafficDetailsPage() {
   const { t } = useTranslation("log");
   const sp = useSearch({ strict: false }) as Record<string, string | undefined>;
   const { getServerName } = useServer();
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = getTodayDateByTimezone("Asia/Shanghai");
 
   const initialFilters = {
     date: sp.date || today,

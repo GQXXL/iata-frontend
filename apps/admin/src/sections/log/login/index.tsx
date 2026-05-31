@@ -13,13 +13,13 @@ import { filterLoginLog } from "@workspace/ui/services/admin/log";
 import { useTranslation } from "react-i18next";
 import { IpLink } from "@/components/ip-link";
 import { UserDetail } from "@/sections/user/user-detail";
-import { formatDate } from "@/utils/common";
+import { formatDate, getTodayDateByTimezone } from "@/utils/common";
 
 export default function LoginLogPage() {
   const { t } = useTranslation("log");
   const sp = useSearch({ strict: false }) as Record<string, string | undefined>;
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = getTodayDateByTimezone("Asia/Shanghai");
 
   const initialFilters = {
     date: sp.date || today,

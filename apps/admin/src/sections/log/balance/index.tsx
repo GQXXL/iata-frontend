@@ -8,13 +8,13 @@ import { useTranslation } from "react-i18next";
 import { Display } from "@/components/display";
 import { OrderLink } from "@/components/order-link";
 import { UserDetail } from "@/sections/user/user-detail";
-import { formatDate } from "@/utils/common";
+import { formatDate, getTodayDateByTimezone } from "@/utils/common";
 
 export default function BalanceLogPage() {
   const { t } = useTranslation("log");
   const sp = useSearch({ strict: false }) as Record<string, string | undefined>;
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = getTodayDateByTimezone("Asia/Shanghai");
 
   // i18n type declarations for extraction
   // t("type.231", "Auto Reset")

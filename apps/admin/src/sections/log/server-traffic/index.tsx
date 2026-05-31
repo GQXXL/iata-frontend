@@ -8,13 +8,14 @@ import { filterServerTrafficLog } from "@workspace/ui/services/admin/log";
 import { formatBytes } from "@workspace/ui/utils/formatting";
 import { useTranslation } from "react-i18next";
 import { useServer } from "@/stores/server";
+import { getTodayDateByTimezone } from "@/utils/common";
 
 export default function ServerTrafficLogPage() {
   const { t } = useTranslation("log");
   const sp = useSearch({ strict: false }) as Record<string, string | undefined>;
   const { getServerName } = useServer();
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = getTodayDateByTimezone("Asia/Shanghai");
 
   const initialFilters = {
     date: sp.date || today,
