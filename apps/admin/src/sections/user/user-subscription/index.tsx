@@ -344,7 +344,7 @@ function RowMoreActions({
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link
-              search={{ user_id: userId, subscribe_id: row.subscribe_id }}
+              search={{ user_id: userId, subscribe_id: row.id }}
               to="/dashboard/log/traffic-details"
             >
               {t("trafficDetails", "Traffic Details")}
