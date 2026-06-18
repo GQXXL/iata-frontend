@@ -96,6 +96,7 @@
   },
   "exports": {
     "./globals.css": "./src/styles/globals.css",
+    "./polyfills": "./src/polyfills.ts",
     "./postcss.config": "./postcss.config.mjs",
     "./lib/*": "./src/lib/*.ts",
     "./utils/*": "./src/utils/*.ts",

@@ -1,3 +1,4 @@
+import "@workspace/ui/polyfills";
 import {
   createHashHistory,
   createRouter,
