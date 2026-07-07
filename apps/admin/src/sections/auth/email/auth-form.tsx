@@ -44,13 +44,13 @@ export default function EmailAuthForm() {
           case "login": {
             const login = await userLogin(params);
             toast.success(t("login.success", "Login successful!"));
-            onLogin(login.data.data?.token);
+            await onLogin(login.data.data?.token);
             break;
           }
           case "register": {
             const create = await userRegister(params);
             toast.success(t("register.success", "Registration successful!"));
-            onLogin(create.data.data?.token);
+            await onLogin(create.data.data?.token);
             break;
           }
           case "reset":

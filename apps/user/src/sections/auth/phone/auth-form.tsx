@@ -53,13 +53,13 @@ export default function PhoneAuthForm() {
           case "login": {
             const login = await telephoneLogin(params);
             toast.success(t("login.success", "Login successful!"));
-            onLogin(login.data.data?.token);
+            await onLogin(login.data.data?.token);
             break;
           }
           case "register": {
             const create = await telephoneUserRegister(params);
             toast.success(t("register.success", "Registration successful!"));
-            onLogin(create.data.data?.token);
+            await onLogin(create.data.data?.token);
             break;
           }
           case "reset":

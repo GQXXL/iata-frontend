@@ -4,14 +4,44 @@ import { isBrowser } from "@workspace/ui/utils/index";
 import axios, { type InternalAxiosRequestConfig } from "axios";
 import { toast } from "sonner";
 
+function getAuthorizationFromConfig(config?: {
+  headers?: unknown;
+}): string | undefined {
+  const headers = config?.headers as
+    | {
+        Authorization?: unknown;
+        authorization?: unknown;
+        get?: (name: string) => unknown;
+      }
+    | undefined;
+
+  const authorization =
+    headers?.Authorization ??
+    headers?.authorization ??
+    headers?.get?.("Authorization") ??
+    headers?.get?.("authorization");
+
+  return typeof authorization === "string" ? authorization : undefined;
+}
+
 function handleError(response: {
   data?: { code?: number; message?: string };
-  config?: { skipErrorHandler?: boolean };
+  config?: { skipErrorHandler?: boolean; headers?: unknown };
   message?: string;
 }) {
   const code = response.data?.code;
-  if (code && [40_002, 40_003, 40_004, 40_005].includes(code))
+  if (code && [40_002, 40_003, 40_004, 40_005].includes(code)) {
+    const requestAuthorization = getAuthorizationFromConfig(response.config);
+    const currentAuthorization = getCookie("Authorization");
+    if (
+      requestAuthorization &&
+      currentAuthorization &&
+      requestAuthorization !== currentAuthorization
+    ) {
+      return;
+    }
     return window.logout();
+  }
   if (response?.config?.skipErrorHandler) return;
   if (!isBrowser()) return;
 
@@ -196,10 +226,7 @@ request.interceptors.response.use(
     if (code !== 200 && code !== 0) {
       handleError({
         data: response.data,
-        config: {
-          skipErrorHandler: (response.config as { skipErrorHandler?: boolean })
-            .skipErrorHandler,
-        },
+        config: response.config as { skipErrorHandler?: boolean },
         message: response.statusText,
       });
       throw response;
@@ -212,11 +239,7 @@ request.interceptors.response.use(
   }) => {
     handleError({
       data: error.response?.data as { code?: number },
-      config: {
-        skipErrorHandler: (
-          error.response?.config as { skipErrorHandler?: boolean }
-        )?.skipErrorHandler,
-      },
+      config: error.response?.config as { skipErrorHandler?: boolean },
       message: error.message,
     });
     return Promise.reject(error);
